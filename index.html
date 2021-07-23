@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
-<script> src = 'https://d3js.org/d3.v5.min.js'></script>
-<script> src = 'https://d3js.org/topojson.v1.min.js'></script>
-
+<script src = 'https://d3js.org/d3.v5.min.js'></script>
+<script src = 'https://d3js.org/topojson.v1.min.js'></script>
 <body>
 <h1>TestPage</h1>
 <p><a href = "./support01.html">test<a/></p>
+</body>
 <script>
 const width = 900;
 const height = 600;
+
 
 const svg = d3.select('body').append('svg').attr('width', width).attr('height', height);
 
@@ -26,5 +27,6 @@ d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
 
     });
 </script>
-</body>
+
+
 </html>
