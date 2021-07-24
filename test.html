@@ -42,6 +42,7 @@ async function init() {
   .x((d) => xscale(d['Measure Names']))
   .y((d) => yscale(d['Measure Values']));
 
+//append path
   d3.select("body").select("svg")
   .attr("style", "border:solid")
   .append("g").attr("transform", origin00 )
@@ -54,7 +55,7 @@ async function init() {
   .attr("stroke", d => color(d.key))
   .attr("stroke-width", 2);
   
-
+//append axis 
   d3.select("body").select("svg")
   .append("g")
   .attr("transform", origin00)
@@ -65,8 +66,21 @@ async function init() {
   .attr("transform", origin01)
   .call(d3.axisBottom(xscale).tickValues([2000,2005,2010,2015,2020]).tickFormat((d,i)=>["2000","2005","2010","2015","2020"][i]));
 
-//append legends
+//append circles
+  d3.select("body").select("svg")
+    .append("g").attr("transform", origin00 )
+    .selectAll("circle")
+    .data(data01)
+    .enter()
+    .append("circle")
+    //.on("mouseover", onMouseOver) //Add listener for the mouseover event
+    //.on("mouseout", onMouseOut)   //Add listener for the mouseout event
+    .attr("r", rectWidth/4)
+    .attr("cx", d => xscale(d["Measure Names"]))
+    .attr("cy", d => yscale(d["Measure Values"]))
+    .style("fill", d => color(d["Country Name"]));
 
+//append legends
   d3.select("body").select("svg")
     .append("g").attr("transform", origin00)
     .selectAll("rect")
@@ -90,13 +104,15 @@ async function init() {
     .text(d => d.key)
     .style("font-size", 10)
     .style("font-family", "Arial"); 
-//tooltip        
-  d3.select("body").append("div").attr("id", "tooltip").attr("style", "position: absolute; opacity: 0;");
-  d3.select("body").select("svg").selectAll("path").data(data02)
-  .join("path")
-  .on('mouseover', function(d) {d3.select('#tooltip').transition().duration(200).style('opacity', 1).text(d.key)})  
-  .on('mouseout', function() {d3.select('#tooltip').style('opacity', 0)})
-  .on('mousemove', function() {d3.select('#tooltip').style('left', (d3.event.pageX+10) + 'px').style('top', (d3.event.pageY+10) + 'px')});
+//tooltip 
+
+//  d3.select("body").append("div").attr("id", "tooltip").attr("style", "position: absolute; opacity: 0;");
+//  d3.select("body").select("svg").selectAll("path").data(data02)
+//  .join("path")
+//  .on('mouseover', function(d) {d3.select('#tooltip').transition().duration(200).style('opacity', 1).text(d.key)})  
+//  .on('mouseout', function() {d3.select('#tooltip').style('opacity', 0)})
+//  .on('mousemove', function() {d3.select('#tooltip').style('left', (d3.event.pageX+10) + 'px').style('top', (d3.event.pageY+10) + 'px')});       
+
 }
 
 
