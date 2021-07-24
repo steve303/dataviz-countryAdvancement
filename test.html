@@ -1,0 +1,110 @@
+<html>
+<script src='https://d3js.org/d3.v5.min.js'></script>
+
+<body onload='init()'>
+<svg width=375 height=300>
+</svg>
+<script>
+async function init() {
+  
+  var data01 = await d3.csv("https://raw.githubusercontent.com/steve303/mywebpage/master/data/employment.csv");
+  console.log(data01);
+
+  //transform data01 wrt to "country name" => data02 
+  var data02 = d3.nest().key(d => d['Country Name']).entries(data01);
+  console.log(data02);
+
+  //set color pallete for different vairables
+  var countryName = data02.map(d => d.key);
+  var color = d3.scaleOrdinal().domain(countryName).range(d3.schemeSet1);
+
+  var widthX = 200;
+  var widthY = 200;
+  var originX = 50;
+  var originY = 50;
+  var origin00 = "translate(50, 50)";
+  var origin01 = "translate(50, 250)";
+  var buffer = 10;
+  //legend parameters
+  var rectWidth = 5
+  var rectHeight = 5
+
+  var max_X = d3.max(data01, function(d) { return +d['Measure Names']; });  //alternate way without map()
+  var min_X = d3.min(data01, function(d) { return +d['Measure Names']; });
+  var max_Y = d3.max(data01, function(d) { return +d['Measure Values']; });  //alternate way without map()
+  var min_Y = d3.min(data01, function(d) { return +d['Measure Values']; });
+  //console.log(max_Y + ' ' + min_Y);
+  //console.log(max_X + ' ' + min_X);
+  var xscale = d3.scaleLinear().domain([2000, 2020]).range([0,widthX]);
+  var yscale = d3.scaleLinear().domain([100, 0]).range([0,widthY]);
+  //create the object, lineGen, which creates the path input
+  var lineGen = d3.line()
+  .x((d) => xscale(d['Measure Names']))
+  .y((d) => yscale(d['Measure Values']));
+
+  d3.select("body").select("svg")
+  .attr("style", "border:solid")
+  .append("g").attr("transform", origin00 )
+  .selectAll("path")
+  .data(data02)
+  .enter()
+  .append("path")
+  .attr("d", function (d) {return lineGen(d.values);})
+  .attr("fill", "none")
+  .attr("stroke", d => color(d.key))
+  .attr("stroke-width", 2);
+  
+
+  d3.select("body").select("svg")
+  .append("g")
+  .attr("transform", origin00)
+  .call(d3.axisLeft(yscale).tickValues([0,25,50,75,100]).tickFormat((d,i)=>["0","25","50","75","100"][i]));
+
+  d3.select("body").select("svg")
+  .append("g")
+  .attr("transform", origin01)
+  .call(d3.axisBottom(xscale).tickValues([2000,2005,2010,2015,2020]).tickFormat((d,i)=>["2000","2005","2010","2015","2020"][i]));
+
+//append legends
+
+  d3.select("body").select("svg")
+    .append("g").attr("transform", origin00)
+    .selectAll("rect")
+    .data(data02)
+    .enter()
+    .append("rect")
+    .attr("x", widthX + buffer)
+    .attr("y", function(d,i) {return i*buffer;})
+    .attr("width", rectWidth)
+    .attr("height", rectHeight)
+    .style("fill", d => color(d.key));
+
+  d3.select("body").select("svg")
+    .append("g").attr("transform", origin00)
+    .selectAll("text")
+    .data(data02)
+    .enter()
+    .append("text")
+    .attr("x", widthX + 2*buffer)
+    .attr("y", function(d,i) {return i*buffer+rectWidth;})
+    .text(d => d.key)
+    .style("font-size", 10)
+    .style("font-family", "Arial"); 
+//tooltip        
+  d3.select("body").append("div").attr("id", "tooltip").attr("style", "position: absolute; opacity: 0;");
+  d3.select("body").select("svg").selectAll("path").data(data02)
+  .join("path")
+  .on('mouseover', function(d) {d3.select('#tooltip').transition().duration(200).style('opacity', 1).text(d.key)})  
+  .on('mouseout', function() {d3.select('#tooltip').style('opacity', 0)})
+  .on('mousemove', function() {d3.select('#tooltip').style('left', (d3.event.pageX+10) + 'px').style('top', (d3.event.pageY+10) + 'px')});
+}
+
+
+
+</script>
+</body>
+
+
+</html>
+
+
