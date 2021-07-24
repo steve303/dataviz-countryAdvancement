@@ -1,12 +1,23 @@
 <html>
 <script src='https://d3js.org/d3.v5.min.js'></script>
 
+<style> 
+  .tooltiptext{font-family: Arial; font-size: 15}
+  .legendtxt{font-family: Arial; font-size: 15}
+  .axistxt{font-family: Arial; font-size: 15}
+</style>
+
 <body onload='init()'>
-<svg width=375 height=300>
-</svg>
+
+
 <script>
+  var width = "900";
+  var height = "600";
+  d3.select("body").append("svg").attr("width", width).attr("height", height)  
+  .attr("style", 
+    "border:solid; border-color:grey; border-width:2px; background-color:lightgrey");
+
 async function init() {
-  
   var data01 = await d3.csv("https://raw.githubusercontent.com/steve303/mywebpage/master/data/employment.csv");
   console.log(data01);
 
@@ -14,20 +25,22 @@ async function init() {
   var data02 = d3.nest().key(d => d['Country Name']).entries(data01);
   console.log(data02);
 
-  //set color pallete for different vairables
   var countryName = data02.map(d => d.key);
   var color = d3.scaleOrdinal().domain(countryName).range(d3.schemeSet1);
 
-  var widthX = 200;
-  var widthY = 200;
-  var originX = 50;
-  var originY = 50;
-  var origin00 = "translate(50, 50)";
-  var origin01 = "translate(50, 250)";
-  var buffer = 10;
+  var marginX = width * 0.10;
+  var marginY = height * 0.10;
+  var widthX = width - 3.5*marginX;
+  var widthY = height - 2*marginY;
+  var originX = marginX;
+  var originY = marginY;
+  var originY01 = widthY+marginY
+  var origin00 = "translate(" + originX + "," + originY + ")";
+  var origin01 = "translate(" + originX + "," + originY01 +  ")";
+  var buffer = 18;
   //legend parameters
-  var rectWidth = 5
-  var rectHeight = 5
+  var rectWidth = 10;
+  var rectHeight = 10;
 
   var max_X = d3.max(data01, function(d) { return +d['Measure Names']; });  //alternate way without map()
   var min_X = d3.min(data01, function(d) { return +d['Measure Names']; });
@@ -44,7 +57,7 @@ async function init() {
 
 //append path
   d3.select("body").select("svg")
-  .attr("style", "border:solid")
+
   .append("g").attr("transform", origin00 )
   .selectAll("path")
   .data(data02)
@@ -55,14 +68,16 @@ async function init() {
   .attr("stroke", d => color(d.key))
   .attr("stroke-width", 2);
   
-//append axis 
+//append yaxis 
   d3.select("body").select("svg")
   .append("g")
+  .attr("class", "axistxt")
   .attr("transform", origin00)
   .call(d3.axisLeft(yscale).tickValues([0,25,50,75,100]).tickFormat((d,i)=>["0","25","50","75","100"][i]));
-
+//append xaxis 
   d3.select("body").select("svg")
   .append("g")
+  .attr("class", "axistxt")
   .attr("transform", origin01)
   .call(d3.axisBottom(xscale).tickValues([2000,2005,2010,2015,2020]).tickFormat((d,i)=>["2000","2005","2010","2015","2020"][i]));
 
@@ -73,12 +88,43 @@ async function init() {
     .data(data01)
     .enter()
     .append("circle")
-    //.on("mouseover", onMouseOver) //Add listener for the mouseover event
-    //.on("mouseout", onMouseOut)   //Add listener for the mouseout event
+    .on("mouseover", onMouseOver) //Add listener for the mouseover event
+    .on("mouseout", onMouseOut)   //Add listener for the mouseout event
     .attr("r", rectWidth/4)
     .attr("cx", d => xscale(d["Measure Names"]))
     .attr("cy", d => yscale(d["Measure Values"]))
     .style("fill", d => color(d["Country Name"]));
+
+//mouseover event handler function
+    function onMouseOver(d, i) {
+        //d3.select(this).attr('class', 'highlight');
+        var x = d["Measure Names"]
+        var y = d["Measure Values"]
+        d3.select(this)
+          .transition()     // adds animation
+          .duration(200)
+          .attr('r', rectWidth/2);
+          
+        d3.select("body").select("svg")
+        .append("g").attr("transform", origin00)
+        .append("text")
+        .attr("class", "tooltiptext") 
+        .attr("x", d => xscale(x))
+        .attr("y", d => yscale(y))
+        .text(function() {
+             return [ ' ' +d["Country Name"] + " " + d["Measure Values"] ]; } );
+    }
+
+//mouseout event handler function
+    function onMouseOut(d, i) {
+        d3.select(this)
+          .transition()     
+          .duration(200)
+          .attr("r", rectWidth/4);
+      
+        d3.selectAll('.tooltiptext')  //select class .tooltiptext for easy removal 
+          .remove()
+    }
 
 //append legends
   d3.select("body").select("svg")
@@ -87,8 +133,8 @@ async function init() {
     .data(data02)
     .enter()
     .append("rect")
-    .attr("x", widthX + buffer)
-    .attr("y", function(d,i) {return i*buffer;})
+    .attr("x", widthX + 2*buffer)
+    .attr("y", function(d,i) {return i*buffer + marginY;})
     .attr("width", rectWidth)
     .attr("height", rectHeight)
     .style("fill", d => color(d.key));
@@ -99,22 +145,12 @@ async function init() {
     .data(data02)
     .enter()
     .append("text")
-    .attr("x", widthX + 2*buffer)
-    .attr("y", function(d,i) {return i*buffer+rectWidth;})
-    .text(d => d.key)
-    .style("font-size", 10)
-    .style("font-family", "Arial"); 
-//tooltip 
-
-//  d3.select("body").append("div").attr("id", "tooltip").attr("style", "position: absolute; opacity: 0;");
-//  d3.select("body").select("svg").selectAll("path").data(data02)
-//  .join("path")
-//  .on('mouseover', function(d) {d3.select('#tooltip').transition().duration(200).style('opacity', 1).text(d.key)})  
-//  .on('mouseout', function() {d3.select('#tooltip').style('opacity', 0)})
-//  .on('mousemove', function() {d3.select('#tooltip').style('left', (d3.event.pageX+10) + 'px').style('top', (d3.event.pageY+10) + 'px')});       
-
+    .attr("class", "legendtxt")
+    .attr("x", widthX + 3*buffer)
+    .attr("y", function(d,i) {return i*buffer+rectWidth + marginY;})
+    .text(d => d.key);
+           
 }
-
 
 
 </script>
