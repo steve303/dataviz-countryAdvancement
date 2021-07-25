@@ -1,6 +1,7 @@
 <html>
 <script src='https://d3js.org/d3.v5.min.js'></script>
 
+
 <style> 
   .tooltiptext{font-family: Arial; font-size: 15}
   .legendtxt{font-family: Arial; font-size: 15}
@@ -12,6 +13,7 @@
 
 <body onload='init()'>
 
+<button onclick="document.location='index.html'">index</button>
 
 <script>
   var width = "900";
@@ -29,7 +31,9 @@ async function init() {
   console.log(data02);
 
   var countryName = data02.map(d => d.key);
-  var color = d3.scaleOrdinal().domain(countryName).range(d3.schemeSet1);
+  //var color = d3.scaleOrdinal().domain(countryName).range(d3.schemePaired);
+  var color = d3.scaleOrdinal().domain(countryName)
+  .range(["gold", "lightgrey", "green", "grey", "black", "red", "violet", "pink", "brown", "blue", "purple", "orange","skyblue"]);
   var yaxisTitle = "% of Adult Population Employed"
   var chartTitle = "Chart Title"
   var marginX = width * 0.10;

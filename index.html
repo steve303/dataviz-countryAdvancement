@@ -2,11 +2,41 @@
 <html>
 <script src = 'https://d3js.org/d3.v5.min.js'></script>
 <script src = 'https://d3js.org/topojson.v1.min.js'></script>
+
+<style> 
+  .Vietnam{fill:gold}
+  .Myanmar{fill:green}
+  .Laos{fill:red}
+  .Georgia{fill:violet}
+  .Ethiopia{fill:pink}
+  .China{fill: brown; font-size: 15}
+  .Cambodia{fill:blue}
+  .Bhutan{fill:purple}
+  .Azerbaijan{fill:orange}
+  .Armenia{fill:skyblue}
+</style>
+
 <body>
-<h1>TestPage</h1>
-<p><a href = "./support01.html">test<a/></p>
-</body>
+<h1>
+Top 10 Countries with Largest Percent Increase in GDP per Capita from 2000-2019
+</h1>
+
+<h2>
+How does Education, Health, and Employment track over the years with these countries?
+</h2>
+
+<h3>
+*  GDP per Capita is an important metric but relying on one number can be misleading.  
+</h3>
+<h3>
+*  By navigating to the selection buttons we can take a closer look to see if these countries improved in these three areas.
+</h3>
+
+
+<button onclick="document.location='test.html'">test</button>
+
 <script>
+
 const width = 900;
 const height = 600;
 
@@ -22,11 +52,19 @@ const g = svg.append('g');
 d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
     .then(data => {
 
-        const countries = topojson.feature(data, data.objects.countries);
-        g.selectAll('path').data(countries.features).enter().append('path').attr('class', 'country').attr('d', path);
+        var countries = topojson.feature(data, data.objects.countries);
+        console.log(countries.features);
+        g.selectAll('path').data(countries.features).enter().append('path').attr('d', path)
+        .attr("fill", "grey")
+        //.attr("id", d => d.id)
+        .attr("class", d => d.properties.name);});
 
-    });
+ d3.select("path.Canada").append("g"); 
+ d3.select("path.Canada").style("fill", "red"); 
+g.append("circle")
 </script>
 
 
+</body>
 </html>
+
