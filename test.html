@@ -5,6 +5,9 @@
   .tooltiptext{font-family: Arial; font-size: 15}
   .legendtxt{font-family: Arial; font-size: 15}
   .axistxt{font-family: Arial; font-size: 15}
+  .titletxt{font-family: Arial; font-weight:bold; font-size: 20}
+
+
 </style>
 
 <body onload='init()'>
@@ -15,7 +18,7 @@
   var height = "600";
   d3.select("body").append("svg").attr("width", width).attr("height", height)  
   .attr("style", 
-    "border:solid; border-color:grey; border-width:2px; background-color:lightgrey");
+    "border:solid; border-color:grey; border-width:2px; background-color:rgb(240,240,240)");
 
 async function init() {
   var data01 = await d3.csv("https://raw.githubusercontent.com/steve303/mywebpage/master/data/employment.csv");
@@ -27,7 +30,8 @@ async function init() {
 
   var countryName = data02.map(d => d.key);
   var color = d3.scaleOrdinal().domain(countryName).range(d3.schemeSet1);
-
+  var yaxisTitle = "% of Adult Population Employed"
+  var chartTitle = "Chart Title"
   var marginX = width * 0.10;
   var marginY = height * 0.10;
   var widthX = width - 3.5*marginX;
@@ -37,7 +41,7 @@ async function init() {
   var originY01 = widthY+marginY
   var origin00 = "translate(" + originX + "," + originY + ")";
   var origin01 = "translate(" + originX + "," + originY01 +  ")";
-  var buffer = 18;
+  var buffer = 18; //controls legend rect spacing 
   //legend parameters
   var rectWidth = 10;
   var rectHeight = 10;
@@ -73,13 +77,25 @@ async function init() {
   .append("g")
   .attr("class", "axistxt")
   .attr("transform", origin00)
-  .call(d3.axisLeft(yscale).tickValues([0,25,50,75,100]).tickFormat((d,i)=>["0","25","50","75","100"][i]));
+  .call(d3.axisLeft(yscale).tickValues([0,25,50,75,100]).tickFormat((d,i)=>["0","25","50","75","100"][i]))
+  .append("text")
+  .attr("transform", "rotate(-90)")
+  .attr("x", -widthY/4 )
+  .attr("y", -marginY/2)
+  .attr("fill", "black").attr("font-weight", "bold")
+  .text(yaxisTitle);
+
 //append xaxis 
   d3.select("body").select("svg")
   .append("g")
   .attr("class", "axistxt")
   .attr("transform", origin01)
-  .call(d3.axisBottom(xscale).tickValues([2000,2005,2010,2015,2020]).tickFormat((d,i)=>["2000","2005","2010","2015","2020"][i]));
+  .call(d3.axisBottom(xscale).tickValues([2000,2005,2010,2015,2020]).tickFormat((d,i)=>["2000","2005","2010","2015","2020"][i]))
+  .append("text")
+  .attr("x", widthX/2 )
+  .attr("y", marginY/1.5)
+  .attr("fill", "black").attr("font-weight", "bold")
+  .text("Year");
 
 //append circles
   d3.select("body").select("svg")
@@ -149,6 +165,13 @@ async function init() {
     .attr("x", widthX + 3*buffer)
     .attr("y", function(d,i) {return i*buffer+rectWidth + marginY;})
     .text(d => d.key);
+
+  d3.select("body").select("svg")
+    .append("text")
+    .attr("class", "titletxt")
+    .attr("x", marginX + widthX/2)
+    .attr("y", marginY/2)
+    .text(chartTitle);  
            
 }
 
