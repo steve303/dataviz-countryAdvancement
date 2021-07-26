@@ -14,6 +14,9 @@
   .Bhutan{fill:purple}
   .Azerbaijan{fill:orange}
   .Armenia{fill:skyblue}
+
+}
+
 </style>
 
 <body>
@@ -22,21 +25,23 @@ Top 10 Countries with Largest Percent Increase in GDP per Capita from 2000-2019
 </h1>
 
 <h2>
-How does Education, Health, and Employment track over the years with these countries?
+GDP per Capita is an important metric but relying on one number can be misleading. 
 </h2>
 
 <h3>
-*  GDP per Capita is an important metric but relying on one number can be misleading.  
+*  How does Education, Health, and Employment data track over the years with these countries? 
 </h3>
 <h3>
 *  By navigating to the selection buttons we can take a closer look to see if these countries improved in these three areas.
 </h3>
 
-
-<button onclick="document.location='test.html'">test</button>
+<div>
+<button onclick="document.location='test.html'">Employment Data</button>
+<button onclick="document.location='health.html'">Health Data</button>
+<button onclick="document.location='education.html'">Education Data</button>
+</div>
 
 <script>
-
 const width = 900;
 const height = 600;
 
@@ -61,10 +66,20 @@ d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
 
  d3.select("path.Canada").append("g"); 
  d3.select("path.Canada").style("fill", "red"); 
-g.append("circle")
+
 </script>
 
 
+<svg height=500 width=300>
+<g>
+<circle cx=100 cy=100 r=10>
+
+</circle>
+</g>
+</svg>
+
+
+<p>source:<a href = "https://data.worldbank.org/">https://data.worldbank.org<a/></p>
 </body>
 </html>
 
