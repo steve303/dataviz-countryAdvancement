@@ -13,14 +13,14 @@
   body{background-image: url(./data/contour-world-map.gif); 
   background-repeat: repeat-y;
   background-size: contain;
-  background-position: center;
+  background-position: right;
   }
 </style>
 
 <body onload='init()'>
 
 
-<h1>Header</h1>
+<h1>Top 10 Countries with Largest Percent Increase in GDP per Capita from 2000-2019</h1>
 
 <script>
   var width = "900";
@@ -42,7 +42,7 @@ async function init() {
   var color = d3.scaleOrdinal().domain(countryName)
   .range(["gold", "lightgrey", "green", "grey", "black", "red", "violet", "pink", "brown", "blue", "purple", "orange","skyblue"]);
   var yaxisTitle = "% of Adult Population Employed"
-  var chartTitle = "Chart Title"
+  var chartTitle = "Percent of Adult Population Employed vs. Year"
   var marginX = width * 0.10;
   var marginY = height * 0.10;
   var widthX = width - 3.5*marginX;
@@ -117,6 +117,8 @@ async function init() {
     .append("circle")
     .on("mouseover", onMouseOver) //Add listener for the mouseover event
     .on("mouseout", onMouseOut)   //Add listener for the mouseout event
+    .transition()     // adds animation
+    .duration(1000)
     .attr("r", rectWidth/3)
     .attr("cx", d => xscale(d["Measure Names"]))
     .attr("cy", d => yscale(d["Measure Values"]))
@@ -181,7 +183,7 @@ async function init() {
   d3.select("body").select("svg")
     .append("text")
     .attr("class", "titletxt")
-    .attr("x", marginX + widthX/2)
+    .attr("x", marginX*2)
     .attr("y", marginY/2)
     .text(chartTitle);  
            
