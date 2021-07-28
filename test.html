@@ -10,24 +10,25 @@
   .legendtxt{font-family: Arial; font-size: 15}
   .axistxt{font-family: Arial; font-size: 15}
   .titletxt{font-family: Arial; font-weight:bold; font-size: 20}
+  .boxed {border: 1px solid grey; font-weight:bold; font-size:16; background-color:white; opacity:0.950}
+  .chart{border:solid; border-color:grey; border-width:2px; background-color:rgb(255,255,255); opacity:0.95}
+  .tick line{stroke:grey}
+
   body{background-image: url(./data/contour-world-map.gif); 
   background-repeat: repeat-y;
   background-size: contain;
-  background-position: right;
+  background-position: top right;
   }
 </style>
 
 <body onload='init()'>
-
-
-<h1>Top 10 Countries with Largest Percent Increase in GDP per Capita from 2000-2019</h1>
+<br/>
+<h1>Top 10 Countries with Largest Percent Increase in GDP per Capita from 2000-2019 - Employment Data</h1>
 
 <script>
   var width = "900";
   var height = "600";
-  d3.select("body").append("svg").attr("width", width).attr("height", height)  
-  .attr("style", 
-    "border:solid; border-color:grey; border-width:2px; background-color:rgb(240,240,240)");
+  d3.select("body").append("svg").attr("width", width).attr("height", height).attr("class", "chart");
 
 async function init() {
   var data01 = await d3.csv("https://raw.githubusercontent.com/steve303/mywebpage/master/data/employment.csv");
@@ -88,20 +89,27 @@ async function init() {
   .append("g")
   .attr("class", "axistxt")
   .attr("transform", origin00)
-  .call(d3.axisLeft(yscale).tickValues([0,25,50,75,100]).tickFormat((d,i)=>["0","25","50","75","100"][i]))
+  .call(d3.axisLeft(yscale)
+  .tickSize(-(widthX))
+  .tickValues([0,25,50,75,100])
+  .tickFormat((d,i)=>["0","25","50","75","100"][i]))
   .append("text")
   .attr("transform", "rotate(-90)")
   .attr("x", -widthY/4 )
   .attr("y", -marginY/2)
   .attr("fill", "black").attr("font-weight", "bold")
   .text(yaxisTitle);
-
+  
+  
 //append xaxis 
   d3.select("body").select("svg")
   .append("g")
   .attr("class", "axistxt")
   .attr("transform", origin01)
-  .call(d3.axisBottom(xscale).tickValues([2000,2005,2010,2015,2020]).tickFormat((d,i)=>["2000","2005","2010","2015","2020"][i]))
+  .call(d3.axisBottom(xscale)
+  .tickSize(-widthY)
+  .tickValues([2000,2005,2010,2015,2020])
+  .tickFormat((d,i)=>["2000","2005","2010","2015","2020"][i]))
   .append("text")
   .attr("x", widthX/2 )
   .attr("y", marginY/1.5)
@@ -186,13 +194,54 @@ async function init() {
     .attr("x", marginX*2)
     .attr("y", marginY/2)
     .text(chartTitle);  
+
+
+
+ const annotations = [{
+    note: {
+      label: "blah blah blah",
+      title: "more blahs",
+      align: "right", //options: middle, left, right
+      wrap: 200,  // try something smaller to see text split in several lines
+      padding: 10   // More = text lower
+    },
+    connector:{
+        end: "arrow"
+      
+    },
+    color: ["black"],
+    x: xscale(2005),
+    y: yscale(60.65),
+    dy: 100,
+    dx: 100
+  }]
+
+  const makeAnnotations = d3.annotation()
+  .annotations(annotations)
+
+
+    d3.select("body").select("svg")
+    .append("g")
+    .attr("transform", origin00)
+    .attr("class", "notes")
+   .call(makeAnnotations)
            
 }
 
-
 </script>
+
 <p>
+
+<svg width = "900" height = "80" class="boxed" >
+<text x="0" y="15">
+<tspan>Surprisingly, employment was fairly flat throughout the years, having a large % increase in GDP per capita did not</tspan>
+<tspan x= "0" dy="20">translate to increased employment in most cases.</tspan> 
+<tspan x= "0" dy="20">more text</tspan> 
+</text>
+</svg>
+  
 </p>
+
 <div>
 <button onclick="document.location='index.html'">Return to Home</button>
 </div>
