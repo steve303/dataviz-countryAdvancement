@@ -10,7 +10,7 @@
   .legendtxt{font-family: Arial; font-size: 15}
   .axistxt{font-family: Arial; font-size: 15}
   .titletxt{font-family: Arial; font-weight:bold; font-size: 20}
-  .boxed {border: 2px solid grey; font-weight:bold; font-size:18; background-color:white; opacity:0.940}
+  .boxed { font-weight:bold; font-size:18}
   .chart{border:solid; border-color:grey; border-width:2px; background-color:white; opacity:0.94}
   .tick line{stroke:grey}
 
@@ -195,14 +195,20 @@ async function init() {
     .attr("y", marginY/2)
     .text(chartTitle);  
 
+  d3.select("body").select("svg")
+    .append("text")
+    .attr("class","legendtxt")
+    .attr("x", buffer)
+    .attr("y", widthY + marginY+ 2.5*buffer)
+    .text("*hover over data for tooltip");  
 
 
  const annotations = [{
     note: {
       title: "Myanmar:",
-      label: "interesting spike in mortality rate",
+      label: "obvious spike appears to coincide with year of Rohingya genocide",
       align: "right", //options: middle, left, right
-      wrap: 150,  // try something smaller to see text split in several lines
+      wrap: 250,  // try something smaller to see text split in several lines
       padding: 10   // More = text lower
     },
     connector:{
@@ -213,7 +219,7 @@ async function init() {
     x: xscale(2018),
     y: yscale(247.69),
     dy: -75,
-    dx: -75
+    dx: -50
   }]
 
   const makeAnnotations = d3.annotation()
@@ -235,7 +241,8 @@ async function init() {
 <svg width = "900" height = "60" class="boxed" >
 <text x="0" y="15">
 <tspan>In general, mortality rate has shown consistent improvement over the years.  This trend is</tspan>
-<tspan x= "0" dy="20">something we would expect with improved GDP per capita.</tspan> 
+<tspan x= "0" dy="20">something we would expect with improved GDP per capita.  However this is not exclusive</tspan> 
+<tspan x= "0" dy="20">to these 10 countries.  Low income countries as a group also show the same trend.</tspan>
 </text>
 </svg>
   

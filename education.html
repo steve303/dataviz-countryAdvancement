@@ -10,7 +10,7 @@
   .legendtxt{font-family: Arial; font-size: 15}
   .axistxt{font-family: Arial; font-size: 15}
   .titletxt{font-family: Arial; font-weight:bold; font-size: 20}
-  .boxed {border: 2px solid grey; font-weight:bold; font-size:18; background-color:white; opacity:0.940}
+  .boxed { font-weight:bold; font-size:18}
   .chart{border:solid; border-color:grey; border-width:2px; background-color:white; opacity:0.94}
   .tick line{stroke:grey}
 
@@ -195,15 +195,25 @@ async function init() {
     .attr("x", marginX*2)
     .attr("y", marginY/2)
     .text(chartTitle);  
+
+  d3.select("body").select("svg")
+    .append("text")
+    .attr("class","legendtxt")
+    .attr("x", buffer)
+    .attr("y", widthY + marginY+ 2.5*buffer)
+    .text("*hover over data for tooltip");  
+
 }
 </script>
 
 <p>
 
-<svg width = "900" height = "60" class="boxed" >
+<svg width = "900" height = "80" class="boxed" >
 <text x="0" y="15">
-<tspan>Although there is some missing data, tertiary school enrollment appears to have increased </tspan>
-<tspan x= "0" dy="20">over the years.</tspan> 
+<tspan>Although there is some missing data, tertiary school enrollment appears to have increased</tspan>
+<tspan x= "0" dy="20">over the years for these ten countries.  Furthermore, most of these countries exceed </tspan> 
+<tspan x= "0" dy="20">the levels of low income countries as a group by 2019.  This is a trend we would expect</tspan> 
+<tspan x= "0" dy="20">with increased GDP per capita.</tspan> 
 </text>
 </svg>
   
