@@ -19,7 +19,6 @@
 "School enrollment, tertiary (% gross)",2017,Vietnam,
 "School enrollment, tertiary (% gross)",2018,Vietnam,
 "School enrollment, tertiary (% gross)",2019,Vietnam,28.63998032
-"School enrollment, tertiary (% gross)",2020,Vietnam,
 "School enrollment, tertiary (% gross)",2000,Upper middle income,17.07987022
 "School enrollment, tertiary (% gross)",2001,Upper middle income,19.01461983
 "School enrollment, tertiary (% gross)",2002,Upper middle income,21.24328995
@@ -41,7 +40,6 @@
 "School enrollment, tertiary (% gross)",2018,Upper middle income,51.79122925
 "School enrollment, tertiary (% gross)",2019,Upper middle income,53.23188019
 "School enrollment, tertiary (% gross)",2020,Upper middle income,
-"School enrollment, tertiary (% gross)",2000,Myanmar,
 "School enrollment, tertiary (% gross)",2001,Myanmar,10.93478966
 "School enrollment, tertiary (% gross)",2002,Myanmar,
 "School enrollment, tertiary (% gross)",2003,Myanmar,
@@ -61,7 +59,6 @@
 "School enrollment, tertiary (% gross)",2017,Myanmar,
 "School enrollment, tertiary (% gross)",2018,Myanmar,18.81594086
 "School enrollment, tertiary (% gross)",2019,Myanmar,
-"School enrollment, tertiary (% gross)",2020,Myanmar,
 "School enrollment, tertiary (% gross)",2000,Middle income,13.86798
 "School enrollment, tertiary (% gross)",2001,Middle income,14.9850502
 "School enrollment, tertiary (% gross)",2002,Middle income,16.2883091
@@ -82,7 +79,6 @@
 "School enrollment, tertiary (% gross)",2017,Middle income,35.39516068
 "School enrollment, tertiary (% gross)",2018,Middle income,36.01070023
 "School enrollment, tertiary (% gross)",2019,Middle income,36.87202072
-"School enrollment, tertiary (% gross)",2020,Middle income,
 "School enrollment, tertiary (% gross)",2000,Low income,4.750899792
 "School enrollment, tertiary (% gross)",2001,Low income,4.988880157
 "School enrollment, tertiary (% gross)",2002,Low income,5.210159779
@@ -103,7 +99,6 @@
 "School enrollment, tertiary (% gross)",2017,Low income,9.489239693
 "School enrollment, tertiary (% gross)",2018,Low income,9.527990341
 "School enrollment, tertiary (% gross)",2019,Low income,
-"School enrollment, tertiary (% gross)",2020,Low income,
 "School enrollment, tertiary (% gross)",2000,Lao PDR,2.693589926
 "School enrollment, tertiary (% gross)",2001,Lao PDR,3.104899883
 "School enrollment, tertiary (% gross)",2002,Lao PDR,4.165380001
@@ -124,7 +119,6 @@
 "School enrollment, tertiary (% gross)",2017,Lao PDR,15.74090958
 "School enrollment, tertiary (% gross)",2018,Lao PDR,14.96675968
 "School enrollment, tertiary (% gross)",2019,Lao PDR,14.45331001
-"School enrollment, tertiary (% gross)",2020,Lao PDR,
 "School enrollment, tertiary (% gross)",2000,Georgia,39.05968857
 "School enrollment, tertiary (% gross)",2001,Georgia,40.86437988
 "School enrollment, tertiary (% gross)",2002,Georgia,43.76617813
@@ -145,7 +139,6 @@
 "School enrollment, tertiary (% gross)",2017,Georgia,56.8112793
 "School enrollment, tertiary (% gross)",2018,Georgia,60.33444977
 "School enrollment, tertiary (% gross)",2019,Georgia,63.91550064
-"School enrollment, tertiary (% gross)",2020,Georgia,
 "School enrollment, tertiary (% gross)",2000,Ethiopia,1.186560035
 "School enrollment, tertiary (% gross)",2001,Ethiopia,1.469179988
 "School enrollment, tertiary (% gross)",2002,Ethiopia,1.649150014
@@ -166,7 +159,6 @@
 "School enrollment, tertiary (% gross)",2017,Ethiopia,
 "School enrollment, tertiary (% gross)",2018,Ethiopia,
 "School enrollment, tertiary (% gross)",2019,Ethiopia,
-"School enrollment, tertiary (% gross)",2020,Ethiopia,
 "School enrollment, tertiary (% gross)",2000,China,7.590410233
 "School enrollment, tertiary (% gross)",2001,China,9.789110184
 "School enrollment, tertiary (% gross)",2002,China,12.62847996
@@ -187,7 +179,6 @@
 "School enrollment, tertiary (% gross)",2017,China,49.07326126
 "School enrollment, tertiary (% gross)",2018,China,50.60443878
 "School enrollment, tertiary (% gross)",2019,China,53.76491165
-"School enrollment, tertiary (% gross)",2020,China,
 "School enrollment, tertiary (% gross)",2000,Cambodia,2.481359959
 "School enrollment, tertiary (% gross)",2001,Cambodia,2.379909992
 "School enrollment, tertiary (% gross)",2002,Cambodia,2.489429951
@@ -208,7 +199,6 @@
 "School enrollment, tertiary (% gross)",2017,Cambodia,13.1342802
 "School enrollment, tertiary (% gross)",2018,Cambodia,13.68776035
 "School enrollment, tertiary (% gross)",2019,Cambodia,14.73896027
-"School enrollment, tertiary (% gross)",2020,Cambodia,
 "School enrollment, tertiary (% gross)",2000,Bhutan,
 "School enrollment, tertiary (% gross)",2001,Bhutan,
 "School enrollment, tertiary (% gross)",2002,Bhutan,
@@ -229,7 +219,6 @@
 "School enrollment, tertiary (% gross)",2017,Bhutan,
 "School enrollment, tertiary (% gross)",2018,Bhutan,15.55451012
 "School enrollment, tertiary (% gross)",2019,Bhutan,
-"School enrollment, tertiary (% gross)",2020,Bhutan,16.44733047
 "School enrollment, tertiary (% gross)",2000,Azerbaijan,
 "School enrollment, tertiary (% gross)",2001,Azerbaijan,
 "School enrollment, tertiary (% gross)",2002,Azerbaijan,
@@ -250,7 +239,6 @@
 "School enrollment, tertiary (% gross)",2017,Azerbaijan,27.06740952
 "School enrollment, tertiary (% gross)",2018,Azerbaijan,27.70849991
 "School enrollment, tertiary (% gross)",2019,Azerbaijan,31.54019928
-"School enrollment, tertiary (% gross)",2020,Azerbaijan,
 "School enrollment, tertiary (% gross)",2000,Armenia,35.54978943
 "School enrollment, tertiary (% gross)",2001,Armenia,33.54529953
 "School enrollment, tertiary (% gross)",2002,Armenia,36.14685822
@@ -271,4 +259,3 @@
 "School enrollment, tertiary (% gross)",2017,Armenia,52.25152969
 "School enrollment, tertiary (% gross)",2018,Armenia,54.57048035
 "School enrollment, tertiary (% gross)",2019,Armenia,51.48752975
-"School enrollment, tertiary (% gross)",2020,Armenia,
