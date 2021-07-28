@@ -23,7 +23,7 @@
 
 <body onload='init()'>
 <br/>
-<h1>Top 10 Countries with Largest Percent Increase in GDP per Capita from 2000-2019 - Employment Data</h1>
+<h1>Top 10 Countries with Largest Percent Increase in GDP per Capita from 2000-2019 - Education Data</h1>
 
 <script>
   var width = "900";
@@ -31,7 +31,7 @@
   d3.select("body").append("svg").attr("width", width).attr("height", height).attr("class", "chart");
 
 async function init() {
-  var data01 = await d3.csv("https://raw.githubusercontent.com/steve303/mywebpage/master/data/employment.csv");
+  var data01 = await d3.csv("https://raw.githubusercontent.com/steve303/mywebpage/master/data/education.csv");
   console.log(data01);
 
   //transform data01 wrt to "country name" => data02 
@@ -42,8 +42,8 @@ async function init() {
   //var color = d3.scaleOrdinal().domain(countryName).range(d3.schemePaired);
   var color = d3.scaleOrdinal().domain(countryName)
   .range(["gold", "lightgrey", "green", "grey", "black", "red", "violet", "pink", "brown", "blue", "purple", "orange","skyblue"]);
-  var yaxisTitle = "% of Adult Population Employed"
-  var chartTitle = "Percent of Adult Population Employed vs. Year"
+  var yaxisTitle = "School Enrollment, Tertiary (%gross)"
+  var chartTitle = "School Enrollment, Tertiary (%gross) vs. Year"
   var marginX = width * 0.10;
   var marginY = height * 0.10;
   var widthX = width - 3.5*marginX;
@@ -67,9 +67,10 @@ async function init() {
   var xscale = d3.scaleLinear().domain([2000, 2020]).range([0,widthX]);
   var yscale = d3.scaleLinear().domain([100, 0]).range([0,widthY]);
   //create the object, lineGen, which creates the path input
-  var lineGen = d3.line()
+  var lineGen = d3.line().defined(function(d){return d["Measure Values"];})
   .x((d) => xscale(d['Measure Names']))
   .y((d) => yscale(d['Measure Values']));
+  var linus = d3.line().defined(function(d){})
 
 //append path
   d3.select("body").select("svg")
@@ -120,14 +121,14 @@ async function init() {
   d3.select("body").select("svg")
     .append("g").attr("transform", origin00 )
     .selectAll("circle")
-    .data(data01)
+    .data(data01)  
     .enter()
     .append("circle")
     .on("mouseover", onMouseOver) //Add listener for the mouseover event
     .on("mouseout", onMouseOut)   //Add listener for the mouseout event
     .transition()     // adds animation
     .duration(1000)
-    .attr("r", rectWidth/3)
+    .attr("r", function(d) {return d["Measure Values"] == "" ? 0:rectWidth/3;})  //radius = 0 if no data => empty string
     .attr("cx", d => xscale(d["Measure Names"]))
     .attr("cy", d => yscale(d["Measure Values"]))
     .style("fill", d => color(d["Country Name"]))
@@ -194,48 +195,15 @@ async function init() {
     .attr("x", marginX*2)
     .attr("y", marginY/2)
     .text(chartTitle);  
-
-
-
- const annotations = [{
-    note: {
-      title: "Armenia:",
-      label: "in some cases employment fell",
-      align: "right", //options: middle, left, right
-      wrap: 150,  // try something smaller to see text split in several lines
-      padding: 10   // More = text lower
-    },
-    connector:{
-        end: "arrow"
-      
-    },
-    color: ["black"],
-    x: xscale(2019),
-    y: yscale(42.97),
-    dy: 75,
-    dx: -100
-  }]
-
-  const makeAnnotations = d3.annotation()
-  .annotations(annotations)
-
-
-    d3.select("body").select("svg")
-    .append("g")
-    .attr("transform", origin00)
-    .attr("class", "notes")
-   .call(makeAnnotations)
-           
 }
-
 </script>
 
 <p>
 
 <svg width = "900" height = "60" class="boxed" >
 <text x="0" y="15">
-<tspan>Surprisingly, employment was fairly flat throughout the years, having a large % increase in GDP per </tspan>
-<tspan x= "0" dy="20">capita did not translate to increased employment in most cases.</tspan> 
+<tspan>Although there is some missing data, tertiary school enrollment appears to have increased </tspan>
+<tspan x= "0" dy="20">over the years.</tspan> 
 </text>
 </svg>
   
