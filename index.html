@@ -4,25 +4,17 @@
 <script src = 'https://d3js.org/topojson.v1.min.js'></script>
 
 <style>
-  *{font-family:Arial} 
-  .Vietnam{fill:gold}
-  .Myanmar{fill:green}
-  .Laos{fill:red}
-  .Georgia{fill:violet}
-  .Ethiopia{fill:pink}
-  .China{fill: brown; font-size: 15}
-  .Cambodia{fill:blue}
-  .Bhutan{fill:purple}
-  .Azerbaijan{fill:orange}
-  .Armenia{fill:skyblue}
+  *{font-family:sans-serif} 
 
-}
-
+  body{background-image: url(./data/contour-world-map.gif); 
+  background-repeat: repeat-y;
+  background-size: 400px 200px;
+  background-position: top right;
 </style>
 
 <body onload = "f0(), f1()">
 <h1>
-Top 10 Countries with Largest Percent Increase in GDP per Capita* from 2000-2019
+Top 10 Countries with Largest Percent Increase in GDP per Capita from 2000-2019
 </h1>
 
 <h2>
@@ -71,11 +63,11 @@ await d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
 </div>
 
 <script>
-  var hy = 400
+  var hy = 350
   var wx = 900
   var spanX = wx - 2*marginX;
   var spanY = hy - 2*marginY;
-  var marginX = .20*wx
+  var marginX = .10*wx
   var marginY = .10*hy
   var svgElem = d3.select("div.divChart").append("svg").attr("width", wx).attr("height", hy).attr("class", "chart");
   
@@ -86,45 +78,101 @@ await d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
 //append xaxis 
   var xscale = d3.scaleLinear()
     .domain([0, 400])
-    .range([0, 400]);
+    .range([0, 500]);
 
   svgElem.append("g")
-  .attr("transform", "translate(200,200)")
+  .attr("transform", "translate(100, 235)")  //XY position !!!
   .call(d3.axisBottom(xscale)
   .tickValues([0,100,200,300,400])
   .tickFormat((d,i)=>["0","100","200","300","400"][i]))
   .append("text")
-  .attr("x", 100)
-  .attr("y", 100)
-  .attr("fill", "black").attr("font-weight", "bold")
-  .text("name");
+  .attr("class", "axisTxt")
+  .attr("x", 220)
+  .attr("y", 50)
+  .attr("fill", "black")
+  .attr("font-weight", "bold")
+  .attr("font-size", "15")
+  .text("Percent Increase GDP per Capita (constant 2010 USD)");
 
 //append y axis 
   var yscale = d3.scaleBand()
     .domain(data01.map(function(d){return d["Country Name"];}))
-    .range([200, 0])
+    .range([225, 0])
     .padding(0.1);
 
   svgElem.append("g")
-    .attr("transform", "translate(200,0)")
+    .attr("transform", "translate(100,10)")  //XY position !!!
+    .attr("class", "yaxis")
     .call(d3.axisLeft(yscale))  
 
 //append bars
   var countryName = data01.map(d => d["Country Name"]);
   var color = d3.scaleOrdinal().domain(countryName)
-  .range(["gold", "red","purple", "blue", "violet", "pink", "orange","skyblue","brown", "green"]);
+  .range(["gold", "red","purple", "blue", "violet", "pink","skyblue", "orange","brown", "green"]);
   
   svgElem.append("g")
-  .attr("transform", "translate(200,0)")
+  .attr("transform", "translate(100,10)")  //XY position !!!
   .selectAll("rect")
   .data(data01)
   .enter()
   .append("rect")
+  .on("mouseover", onMouseOver) //Add listener for the mouseover event
+  .on("mouseout", onMouseOut)   //Add listener for the mouseout event
   .attr("x", function(d) {return xscale(0);})
   .attr("y", function(d) {return yscale(d["Country Name"]);})
   .attr("width", function(d) {return xscale(d["ChangeGDPperCapita"]);})
   .attr("height", yscale.bandwidth())
   .attr("fill", function(d) {return color(d["Country Name"]);})
+
+//mouseover event handler function
+    function onMouseOver(d, i) {
+        //d3.select(this).attr('class', 'highlight');
+        var y = d["Country Name"];
+        var x = d["ChangeGDPperCapita"];
+
+        d3.select(this)
+          .transition()     // adds animation
+          .duration(200)
+          .attr("width", function(d) {return 10 + xscale(d["ChangeGDPperCapita"]);})
+          .attr("height", 5+yscale.bandwidth());
+          
+          
+        svgElem.append("g").attr("transform", "translate(100,0)")
+        .append("text")
+        .attr("class", "tooltiptext") 
+        .attr("x", d => 15+xscale(x))  //position X !!!
+        .attr("y", d => 10+15+yscale(y))  //position Y !!!
+        .text(function() {                //why is syntax: function() and not function(d) ???
+             return [ ' ' +d["Country Name"] + " " + d["ChangeGDPperCapita"] ]; } );
+        
+        if (y == "Lao PDR") {y = "Laos";};  //required to maintain same class name from cou
+
+        d3.select("." + y).attr("fill",function() //why is syntax: function() and not function(d) ???
+        {var c = color(d["Country Name"]);
+        console.log(d["Country Name"]);
+        console.log(c);
+        return c;});     
+    }
+
+//mouseout event handler function
+    function onMouseOut(d, i) {
+        var country = d["Country Name"];
+        d3.select(this)
+          .transition()     
+          .duration(200)
+          .attr("width", function(d) {return xscale(d["ChangeGDPperCapita"]);})
+          .attr("height", yscale.bandwidth());
+      
+        d3.selectAll('.tooltiptext')  //select class .tooltiptext for easy removal 
+          .remove();
+
+      if (country == "Lao PDR") {country = "Laos";};  //required to maintain same class name from country geoPath database
+
+      d3.select("." + country )
+        //.attr("fill", function() {return color(d["Country Name"]);});  
+        .attr("fill", "grey")
+
+    }  
 
 }
 
