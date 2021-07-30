@@ -65,8 +65,8 @@ await d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
 <script>
   var hy = 350
   var wx = 900
-  var spanX = wx - 2*marginX;
-  var spanY = hy - 2*marginY;
+  var spanX = wx - 2*marginX;  //not used ??
+  var spanY = hy - 2*marginY;  //not used ??
   var marginX = .10*wx
   var marginY = .10*hy
   var svgElem = d3.select("div.divChart").append("svg").attr("width", wx).attr("height", hy).attr("class", "chart");
@@ -92,7 +92,7 @@ await d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
   .attr("fill", "black")
   .attr("font-weight", "bold")
   .attr("font-size", "15")
-  .text("Percent Increase GDP per Capita (constant 2010 USD)");
+  .text("% Increase GDP per Capita from 2019 to 2000 (constant 2010 USD)");
 
 //append y axis 
   var yscale = d3.scaleBand()
@@ -179,7 +179,7 @@ await d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
 
 </script>
 
-
+<p>notes: Hover over bar chart for tool tip</p>
 <p>source:<a href = "https://data.worldbank.org/">https://data.worldbank.org<a/></p>
 </body>
 </html>
