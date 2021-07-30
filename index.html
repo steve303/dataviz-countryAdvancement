@@ -5,14 +5,18 @@
 
 <style>
   *{font-family:sans-serif} 
-
+  header{}
+ 
   body{background-image: url(./data/contour-world-map.gif); 
   background-repeat: repeat-y;
   background-size: 400px 200px;
-  background-position: top right;
+  background-position: top right;}
+
 </style>
 
 <body onload = "f0(), f1()">
+
+<header>
 <h1>
 Top 10 Countries with Largest Percent Increase in GDP per Capita from 2000-2019
 </h1>
@@ -21,8 +25,10 @@ Top 10 Countries with Largest Percent Increase in GDP per Capita from 2000-2019
 GDP per Capita is an important metric but relying on one number can be misleading. 
 </h2>
 
-<h3>Find out how Education, Health, and Employment data track over the years with these countries.</h3>
-<h3>Navigate to the buttons below to gain insights on both expected and unexpected trends.</h3>
+<h3><li>Find out how Education, Health, and Employment data track over the years with these countries.</h3>
+<h3><li>Navigate to the buttons below to gain insights on both expected and unexpected trends.</h3>
+<hr>
+</header>
 
 <div>
 <button onclick="document.location='employment.html'">Employment Data</button>
@@ -92,7 +98,7 @@ await d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')
   .attr("fill", "black")
   .attr("font-weight", "bold")
   .attr("font-size", "15")
-  .text("% Increase GDP per Capita from 2019 to 2000 (constant 2010 USD)");
+  .text("% Increase GDP per Capita from 2000 to 2019 (constant 2010 USD)");
 
 //append y axis 
   var yscale = d3.scaleBand()
