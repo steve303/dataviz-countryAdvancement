@@ -1,5 +1,5 @@
 
-## Country Advancement D3.js Visualization (education, employment, health)  
+## Country Advancement D3.js Visualization (Education, Employment, Health)  
 
 ### Top 10 Countries with Largest Percent Increase in GDP per Capita from 2000-2019
 GDP per Capita is an important metric but relying on one number can be misleading.
